@@ -6,6 +6,7 @@ import os
 def CreateDot(currentPos, digit):
     #Just checking if this is correct !TEMP!
     print(f"Current position for dot creation : {currentPos}")
+    print(image.size)
 
 #Sets the draw pointer to a certain position, handles overflow
 def MoveToNewPos(currentPos, distance):
@@ -13,16 +14,16 @@ def MoveToNewPos(currentPos, distance):
     
     #check size and currentPos against distance. overflow.
     #x
-    tempPos[0] += distance // image.size[0]
+    tempPos[0] += (distance % image.size[0])
     #y
-    tempPos[1] += distance % image.size[0]
+    tempPos[1] += distance // image.size[0]
 
     #y adding extra line if it overflows on x
-    tempPos[1] += (tempPos[0] + 1) // image.size[0]
+    tempPos[1] += (tempPos[0]) // image.size[0]
     #x putting it in the right spot
-    tempPos[0] = (tempPos[0] + 1) % image.size[0]
+    tempPos[0] = (tempPos[0]) % image.size[0]
     #y handling overflow
-    tempPos[1] = (tempPos[1] + 1) % image.size[0]
+    tempPos[1] = (tempPos[1]) % image.size[1]
 
     return tempPos
 
