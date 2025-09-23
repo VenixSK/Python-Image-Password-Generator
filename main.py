@@ -105,7 +105,23 @@ with PIL.Image.open(fDirectory) as image:
             #start drawing
             print(f"Current position for dot creation : {currentPos}")
             CreateDot(currentPos, int(pinCode[i]))
+    
+    #Making a copy, so that I can roll it
+    copyImageMask = PIL.Image.new("RGB", imageMask.size)
+    #Rolling even rows
+    for y in range(0, imageMask.height):
+        if(y%2==0):
+            for x in range(imageMask.width):
+                newX = (x + int(pinCode)) % imageMask.width
+                pixel = imageMask.getpixel((x,y))
+                copyImageMask.putpixel((newX, y), pixel)
+        else:
+            for x in range(imageMask.width):
+                pixel = imageMask.getpixel((x,y))
+                copyImageMask.putpixel((x, y), pixel)
 
+    imageMask = copyImageMask
+    
     #Temp !! Just testing if the mask looks correct
     imageMask.save("imgMask.png", "PNG")
     print("Image Mask saved !")      
