@@ -19,7 +19,7 @@ def CreateDot(currentPos, digit):
                     imageMask.putpixel(currentPos, (255, 255, 255))
                     currentPos = MoveToNewPosX(currentPos, 1)
         
-            currentPos = MoveToNewPos(originCurrentPos, imageMask.size[0]*(y+1))
+            currentPos = MoveToNewPos(originCurrentPos, imageMask.width*(y+1))
     #Otherwise just squares
     else:
         for y in range(digit):
@@ -27,7 +27,7 @@ def CreateDot(currentPos, digit):
                 imageMask.putpixel(currentPos, (255, 255, 255))
                 currentPos = MoveToNewPosX(currentPos, 1)
             
-            currentPos = MoveToNewPos(originCurrentPos, imageMask.size[0]*(y+1))
+            currentPos = MoveToNewPos(originCurrentPos, imageMask.width*(y+1))
     
     currentPos = originCurrentPos
 
@@ -37,16 +37,16 @@ def MoveToNewPos(currentPos, distance):
     
     #check size and currentPos against distance. overflow.
     #x
-    tempPos[0] += (distance % image.size[0])
+    tempPos[0] += (distance % image.width)
     #y
-    tempPos[1] += distance // image.size[0]
+    tempPos[1] += distance // image.width
 
     #y adding extra line if it overflows on x
-    tempPos[1] += (tempPos[0]) // image.size[0]
+    tempPos[1] += (tempPos[0]) // image.width
     #x putting it in the right spot
-    tempPos[0] = (tempPos[0]) % image.size[0]
+    tempPos[0] = (tempPos[0]) % image.width
     #y handling overflow
-    tempPos[1] = (tempPos[1]) % image.size[1]
+    tempPos[1] = (tempPos[1]) % image.height
 
     return tempPos
 
@@ -57,7 +57,7 @@ def MoveToNewPosX(currentPos, distance):
     #check size and currentPos against distance. overflow. x
     tempPos[0] += distance
     #x putting it in the right spot
-    tempPos[0] = (tempPos[0]) % image.size[0]
+    tempPos[0] = (tempPos[0]) % image.width
 
     return tempPos
 
