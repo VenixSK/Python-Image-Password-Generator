@@ -3,10 +3,33 @@ import PIL.Image
 import sys
 import os
 
+#Draws the dot, handles everything
 def CreateDot(currentPos, digit):
-    #Just checking if this is correct !TEMP!
-    print(f"Current position for dot creation : {currentPos}")
-    print(image.size)
+    if(digit > 9):
+        sys.exit("Digit higher than possible was inserted")
+
+    originCurrentPos = currentPos
+    #if 0, then it's a square with a hole in the middle
+    if(digit==0):
+        for y in range(3):
+            for x in range(3):
+                if(y == 1 and x == 1):
+                    currentPos = MoveToNewPos(currentPos, 1)
+                else:
+                    imageMask.putpixel(currentPos, (255, 255, 255))
+                    currentPos = MoveToNewPos(currentPos, 1)
+        
+            currentPos = MoveToNewPos(originCurrentPos, imageMask.size[0]*(y+1))
+    #Otherwise just squares
+    else:
+        for y in range(digit):
+            for x in range(digit):
+                imageMask.putpixel(currentPos, (255, 255, 255))
+                currentPos = MoveToNewPos(currentPos, 1)
+            
+            currentPos = MoveToNewPos(originCurrentPos, imageMask.size[0]*(y+1))
+    
+    currentPos = originCurrentPos
 
 #Sets the draw pointer to a certain position, handles overflow
 def MoveToNewPos(currentPos, distance):
@@ -59,7 +82,9 @@ with PIL.Image.open(fDirectory) as image:
             #sets the position on the calculated distance
             currentPos = MoveToNewPos(currentPos, distance)
             #start drawing
+            print(f"Current position for dot creation : {currentPos}")
             CreateDot(currentPos, int(pinCode[i]))
+
         #when odd, it will insert the pinCode itself as distance
         else:
             distance = int(pinCode)
@@ -67,5 +92,9 @@ with PIL.Image.open(fDirectory) as image:
             #sets the position on the calculated distance
             currentPos = MoveToNewPos(currentPos, distance)
             #start drawing
+            print(f"Current position for dot creation : {currentPos}")
             CreateDot(currentPos, int(pinCode[i]))
-            
+
+    #Temp !! Just testing if the mask looks correct
+    imageMask.save("imgMask.png", "PNG")
+    print("Image Mask saved !")      
