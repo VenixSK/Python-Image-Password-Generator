@@ -3,6 +3,8 @@ import PIL.Image
 import sys
 import os
 
+psswrdString = ""
+
 #Draws the dot, handles everything
 def CreateDot(currentPos, digit):
     if(digit > 9):
@@ -137,6 +139,25 @@ with PIL.Image.open(fDirectory) as image:
     
     imageMask = copyImageMask
     
+    #pixel to character conversion
+    with open("code.txt", "r") as f:
+        #so we know how many chars we have to work with
+        code = f.readlines()[0]
+        codeLen = len(code)
+        image = image.convert("RGB")
+
+        for y in range(imageMask.height):
+            for x in range(imageMask.width):
+                if(imageMask.getpixel((x, y)) == (255, 255, 255)):
+                   #get color data from the original image
+                   r,g,b = image.getpixel((x,y))
+                   colorSum = r+g+b
+
+                   #adding char to string
+                   combination = (colorSum+x+y) % codeLen
+                   psswrdString = psswrdString + code[combination]
+
     #Temp !! Just testing if the mask looks correct
     imageMask.save("imgMask.png", "PNG")
     print("Image Mask saved !")      
+    print(psswrdString)
