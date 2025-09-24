@@ -95,7 +95,6 @@ with PIL.Image.open(fDirectory) as image:
             #sets the position on the calculated distance
             currentPos = MoveToNewPos(currentPos, distance)
             #start drawing
-            print(f"Current position for dot creation : {currentPos}")
             CreateDot(currentPos, int(pinCode[i]))
 
         #when odd, it will insert the pinCode itself as distance
@@ -105,7 +104,6 @@ with PIL.Image.open(fDirectory) as image:
             #sets the position on the calculated distance
             currentPos = MoveToNewPos(currentPos, distance)
             #start drawing
-            print(f"Current position for dot creation : {currentPos}")
             CreateDot(currentPos, int(pinCode[i]))
     
     #Making a copy, so that I can roll it
@@ -157,7 +155,7 @@ with PIL.Image.open(fDirectory) as image:
                    combination = (colorSum+x+y) % codeLen
                    psswrdString = psswrdString + code[combination]
 
-    #Temp !! Just testing if the mask looks correct
-    imageMask.save("imgMask.png", "PNG")
-    print("Image Mask saved !")      
-    print(psswrdString)
+#Printing out the string by 10 chars   
+lenGroupAmount = (len(psswrdString) // 10) + (len(psswrdString) % 10 != 0)
+for i in range(lenGroupAmount):
+    print(f"{i}: {psswrdString[i*10:(i*10)+10]}")
