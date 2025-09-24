@@ -109,7 +109,7 @@ with PIL.Image.open(fDirectory) as image:
     #Making a copy, so that I can roll it
     copyImageMask = PIL.Image.new("RGB", imageMask.size)
     #Rolling even rows
-    for y in range(0, imageMask.height):
+    for y in range(imageMask.height):
         if(y%2==0):
             for x in range(imageMask.width):
                 newX = (x + int(pinCode)) % imageMask.width
@@ -120,6 +120,21 @@ with PIL.Image.open(fDirectory) as image:
                 pixel = imageMask.getpixel((x,y))
                 copyImageMask.putpixel((x, y), pixel)
 
+    imageMask = copyImageMask
+
+    #Making a copy, so that I can roll it again
+    copyImageMask = PIL.Image.new("RGB", imageMask.size)
+    #Rolling even columns
+    for y in range(imageMask.height):
+        for x in range(imageMask.width):
+            if(x%2==0):
+                newY = (y + int(pinCode)) % imageMask.height
+                pixel = imageMask.getpixel((x,y))
+                copyImageMask.putpixel((x,newY), pixel)
+            else:
+                pixel = imageMask.getpixel((x,y))
+                copyImageMask.putpixel((x,y), pixel)
+    
     imageMask = copyImageMask
     
     #Temp !! Just testing if the mask looks correct
