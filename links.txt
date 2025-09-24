@@ -1,3 +1,0 @@
-https://pillow.readthedocs.io/en/stable/
-https://pillow.readthedocs.io/en/latest/handbook/index.html
-https://github.com/python-pillow/Pillow
